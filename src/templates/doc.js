@@ -1,12 +1,12 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
+// import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 export const query = graphql`
   query($nodeId: String!) {
-    mdx(id: { eq: $nodeId }) {
+    markdownRemark(id: { eq: $nodeId }) {
       id
-      body
+      html
       frontmatter {
         title
       }
@@ -18,11 +18,11 @@ export const query = graphql`
 `;
 
 const Doc = ({ data, pageContext }) => {
-  const { frontmatter, fields, body } = data.mdx;
+  const { frontmatter, fields, html } = data.markdownRemark;
 
   return (<div>
     <h1>{frontmatter.title}</h1>
-    <MDXRenderer>{body}</MDXRenderer>
+    <div dangerouslySetInnerHTML={{ __html: html }}/ >
   </div>);
 };
 

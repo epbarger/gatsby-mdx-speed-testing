@@ -8,19 +8,24 @@
 
 const { createFilePath } = require(`gatsby-source-filesystem`);
 
+const nodeTypes = {};
+
 exports.onCreateNode = async ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
+  nodeTypes[node.internal.type] = true;
 
-  if (node.internal.type !== 'Mdx') return;
+  if (node.internal.type !== 'MarkdownRemark') return;
 
   const path = createFilePath({ node, getNode });
   createNodeField({ node, name: 'path', value: path });
 };
 
 exports.createPages = async ({ actions, graphql }) => {
+  console.log(nodeTypes);
+
   const result = await graphql(`
     query {
-      allMdx {
+      allMarkdownRemark {
         nodes {
           id
           frontmatter {
@@ -34,7 +39,7 @@ exports.createPages = async ({ actions, graphql }) => {
     }
   `);
 
-  const { nodes } = result.data.allMdx;
+  const { nodes } = result.data.allMarkdownRemark;
 
   nodes.forEach(node => {
     actions.createPage({
