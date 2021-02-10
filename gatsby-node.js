@@ -8,11 +8,8 @@
 
 const { createFilePath } = require(`gatsby-source-filesystem`);
 
-const nodeTypes = {};
-
 exports.onCreateNode = async ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
-  nodeTypes[node.internal.type] = true;
 
   if (node.internal.type !== 'MarkdownRemark') return;
 
@@ -21,8 +18,6 @@ exports.onCreateNode = async ({ node, getNode, actions }) => {
 };
 
 exports.createPages = async ({ actions, graphql }) => {
-  console.log(nodeTypes);
-
   const result = await graphql(`
     query {
       allMarkdownRemark {

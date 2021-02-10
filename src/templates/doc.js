@@ -1,6 +1,5 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-// import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 export const query = graphql`
   query($nodeId: String!) {
