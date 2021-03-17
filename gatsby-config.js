@@ -37,7 +37,16 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-
+        lessBabel: true,
+        gatsbyRemarkPlugins: [
+          {
+            resolve: 'gatsby-remark-images',
+            options: {
+              linkImagesToOriginal: false,
+              showCaptions: false,
+            },
+          },
+        ],
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
